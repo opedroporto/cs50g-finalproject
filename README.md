@@ -27,8 +27,8 @@ The Level Scene includes a **Bottom-up Level Generator**, in which generates eac
 
 ## How to access it (Linux only)
 #### Download from web 
-• go to Download [Download Link](https://drive.google.com/drive/folders/1jNkPpK6-_DXVlI24532SCjOfAcSG7pg7) \
-• enjoy it.
+• Go to [Download Link](https://drive.google.com/drive/folders/1jNkPpK6-_DXVlI24532SCjOfAcSG7pg7) \
+• Enjoy it.
 
 
 Course: [CS50’s Introduction to Game Development: Final Project](https://cs50.harvard.edu/games/2018)
