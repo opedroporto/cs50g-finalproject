@@ -17,6 +17,69 @@
 
 The Level Scene includes a **Bottom-up Level Generator**, in which generates each level based on the level the player currently is, this includes generating the whole scenario (floors and walls) and enemies. The enemies and the player move around and are oriented through the scenario with  **Navigation meshes** (designated meshes in the scene which specifies navigable areas in the environment, including areas where characters can walk, as well as obstacles).
 
+
+
+</br></br>
+## States
+
+As the other projects of this course, this **Game** contains multiple states such as the:
+>**Start Menu State**\
+**Level Menu State**\
+**In Play State**\
+**Winning State**\
+**Game Over State**: The whole game is frozen and a black canvas is rendered with a game over message and a menu where the player can choose between going back to the main menu or exit the game.
+
+-----
+
+The **Player** may vary between:
+>**Idle State**\
+**Walking State**\
+**Dead State**: Once the player's life get to 0, he is taken as dead and the Game Over State is called.\
+
+And he cant simultaneously, while idle or walking:
+>**Attack** entities by swiping his sword\
+**Carry** bodies of dead entities
+
+-----
+
+The **Enemies** are entities that vary its states and animation states between:
+>**Idle State**\
+**Walking State**\
+**Attacking State**\
+**Dead State**: Once the enemie's life get to 0 and it is taken as dead, its **Radgdoll** Component is instantly activated, which means the enemy instantly becomes a ragdoll and his rigid body physics abruptly changes and the enemies body falls on the floors
+
+
+
+</br></br>
+## Scripts
+
+#### Among the multiple scripts created for the various game functionalities, there are:
+**ActivateCursor.cs** and **DeactivateCursor.cs**: Respectively activate and deactivate the application cursor on each scene
+
+**AudioManager.cs**: Manages the audio throughout the whole game.
+
+**CanvasController.cs**, **GameOverMenu.cs**, **MainMenu.cs** and  **PauseMenu.cs**: Control the canvas menus functionalities of different menus of the game.
+
+**PikcupEntity.cs**: Implemented on player to give him the ability of carrying dead bodies.
+
+**DontDestroy.cs**: Prevent objects from being destroyed through scenes.
+
+**Enemy.cs**: Manages enemies specifications such as their health points and takes care of activating the radgoll physics on the entities.
+
+**EnemyAI.cs**: Manages enemies AI, taking care of its state and animations associated to each state, in other words, here are the functionalities that makes the enemies walk patrolling, look for a player and go after him.
+
+**GameInfo.cs**: Keeps information about the current player progress throughout scenes.
+
+**GenerateMenuLevels.cs**: Generate the levels button for each level on Main Menu.
+
+**Player.cs**: Manages players features, such as taking damage (flashing damage canvas when damage is taken), attacking and dying (used for calling game over canvas).
+
+**LevelGenerator.cs**: An object with this script is spawned every time a a player enters a level and it is necessary to generate the whole level, floor by floor from the bottom of the pit. Given the current level, the script resizes the base-shapes (walls and floors created using ProBuilder API) and spawns them at their respective positions so they institute a pit, enemies are also spawned on randomly picked locations through the floors.
+
+Among others auxiliar scripts...
+
+
+</br></br>
 ## Files walkthrough
 **Assets/**: Used to store and manage game assets.\
 **Packages/**: Unity package management folder.\
@@ -25,8 +88,11 @@ The Level Scene includes a **Bottom-up Level Generator**, in which generates eac
 **.gitignore**: Contains specifications for files and paths that Git should ignore when performing git actions.\
 **README.md**: It is this file
 
-## How to access it (Linux only)
-#### Download from web 
+
+
+</br></br>
+## How to play (Linux only)
+#### Download from web:
 • Go to [Download Link](https://drive.google.com/drive/folders/1jNkPpK6-_DXVlI24532SCjOfAcSG7pg7) \
 • Enjoy it.
 
