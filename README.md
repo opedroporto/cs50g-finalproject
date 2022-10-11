@@ -1,6 +1,11 @@
 # The Pit
-#### Video Demo: https://youtu.be/sP8kI1ItUSM
-#### Description: The Pit is a single-player first-person fighting game. In each level, you are put into the very bottom floor of a pit, and your goal is to defeat the enemies on that level and stack the enemies body up in order to set foot on the next floor until you get out of the pit. As you pass levels, floors are added to the pit and the harder it gets to get out of it.
+#### Video Demo:
+<a href="https://youtu.be/sP8kI1ItUSM" target="_blank">
+     <img src="https://user-images.githubusercontent.com/77935889/182732125-1457dd64-b815-4524-a2b9-21eaba6b9762.png" alt="Demo Video of The Pit" height="100%" />
+</a>
+
+#### Description:
+#### The Pit is a single-player first-person fighting game. In each level, you are put into the very bottom floor of a pit, and your goal is to defeat the enemies on that level and stack the enemies body up in order to set foot on the next floor until you get out of the pit. As you pass levels, floors are added to the pit and the harder it gets to get out of it.
 
 | |
 |:-------------------------:|
@@ -23,9 +28,9 @@ The Level Scene includes a **Bottom-up Level Generator**, in which generates eac
 ## States
 
 As the other projects of this course, this **Game** contains multiple states such as the:
->**Start Menu State**\
-**Level Menu State**\
-**In Play State**\
+>**Main Menu State**: It is the initial state, rendered when the player opens the game. It contains the game title ("The Pit"), a button ("Controls") that gives player access to a description of the game controls, a button ("Exit Game") that quits the application and a whole menu frame with 15 buttons, each representing a level from the game; these level buttons are initially all unlocked, except for the first level (Level 1), and are dynamic unlocked according to a control variable that persists between scenes and records as the player concludes the highest unlocked level..\
+**Level Menu State**: It acts as some sort of "pre-game" state and it includes a Level Indicator, which shows the player the current level he is entering, a Go Back Button that allows the user to go back to the Main Menu State and a Play Button that allows the user to enter the game itself, rendering the next State.\
+**In Play State**: It is called from the previous state ("Level Menu State") and is rendered according to a control variable that persists between scenes which informs the Level Generator Script ("LevelGenerator.cs") the current level the player is so it can generate enemies, floors, walls, colliders, etc. accordingly.\
 **Winning State**\
 **Game Over State**: The whole game is frozen and a black canvas is rendered with a game over message and a menu where the player can choose between going back to the main menu or exit the game.
 
@@ -36,7 +41,7 @@ The **Player** may vary between:
 **Walking State**\
 **Dead State**: Once the player's life get to 0, he is taken as dead and the Game Over State is called.\
 
-And he cant simultaneously, while idle or walking:
+And he can simultaneously, while idling or walking:
 >**Attack** entities by swiping his sword\
 **Carry** bodies of dead entities
 
@@ -76,7 +81,7 @@ The **Enemies** are entities that vary its states and animation states between:
 
 **LevelGenerator.cs**: An object with this script is spawned every time a a player enters a level and it is necessary to generate the whole level, floor by floor from the bottom of the pit. Given the current level, the script resizes the base-shapes (walls and floors created using ProBuilder API) and spawns them at their respective positions so they institute a pit, enemies are also spawned on randomly picked locations through the floors.
 
-Among others auxiliar scripts...
+Among other auxiliar scripts...
 
 
 </br></br>
