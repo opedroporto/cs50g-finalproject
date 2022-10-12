@@ -28,30 +28,32 @@ The Level Scene includes a **Bottom-up Level Generator**, in which generates eac
 ## States
 
 As the other projects of this course, this **Game** contains multiple states such as the:
->**Main Menu State**: It is the initial state, rendered when the player opens the game. It contains the game title ("The Pit"), a button ("Controls") that gives player access to a description of the game controls, a button ("Exit Game") that quits the application and a whole menu frame with 15 buttons, each representing a level from the game; these level buttons are initially all unlocked, except for the first level (Level 1), and are dynamic unlocked according to a control variable that persists between scenes and records as the player concludes the highest unlocked level..\
+>**Main Menu State**: It is the initial state, rendered when the player opens the game. It contains the game title ("The Pit"), a button ("Controls") that gives player access to a description of the game controls, a button ("Exit Game") that quits the application and a whole menu frame with 15 buttons, each representing a level from the game; these level buttons are initially all unlocked, except for the first level (Level 1), and are dynamic unlocked according to a control variable that persists between scenes and records as the player concludes the highest unlocked level.\
 **Level Menu State**: It acts as some sort of "pre-game" state and it includes a Level Indicator, which shows the player the current level he is entering, a Go Back Button that allows the user to go back to the Main Menu State and a Play Button that allows the user to enter the game itself, rendering the next State.\
 **In Play State**: It is called from the previous state ("Level Menu State") and is rendered according to a control variable that persists between scenes which informs the Level Generator Script ("LevelGenerator.cs") the current level the player is so it can generate enemies, floors, walls, colliders, etc. accordingly.\
-**Winning State**\
-**Game Over State**: The whole game is frozen and a black canvas is rendered with a game over message and a menu where the player can choose between going back to the main menu or exit the game.
+**Pause State**: If the player is on "In Play State", he can pause the game whenever he wants. By pressing "ESC" while on "In Play State", the whole game freezes ("Time.timeScale = 0;"), darkens itself and the Pause Canvas with "Resume" button that allows the player to return to the "In Play State", a "Return to Menu" button that allows the player to give up the current game and go back to the "Main Menu State" and a "Exit Button" that quits the application.\
+**Winning State**: A Collider is put on the each level and when the player hits it, similarly to the "Pause State", the game freezes and darkens itself, a "Level Completed!" congratulations message is centered on the the rendered canvas and a button ("Return to Menu") is rendered at the bottom of the screen allowing the player to go back to the "Main Menu State". In addiction to its functionalities, when the player concludes the level, it may or may not mean the player has unlock one more level, and it is in this state that the record is taken.\
+**Game Over State**: If the player is on "In Play State" and he gets to "Dead State" (when he life gets to 0), the whole game is frozen and a black canvas is rendered with a game over message and a menu where the player can choose between going back to "Main Menu State" or quit the application.
 
 -----
 
 The **Player** may vary between:
->**Idle State**\
-**Walking State**\
-**Dead State**: Once the player's life get to 0, he is taken as dead and the Game Over State is called.\
+>**Idle State**: It is the initial player state and it is active always the player doesn't move and its coordinates are the same.\
+**Walking State**: While one of the Movement Keys ("WASD") is pressed,  the state is active and the players coordinates change according to the pressed keys, in other words, the player gets to move.\
+**Running State: Similarly to the walking state, the player also is able to move around the scene with the Movement Keys, however the state is active while the "Shift" Key is pressed and the player speed is incresead, in other words, he moves faster.**\
+**Dead State**: As the player takes damage from other entities, his life decreases. Once the player's life get to 0, he is taken as dead independent from his previous current state and the Game Over State is called.\
 
-And he can simultaneously, while idling or walking:
->**Attack** entities by swiping his sword\
-**Carry** bodies of dead entities
-
+And he can simultaneously, while idling, walking or running:
+>**Attack** entities by swiping his sword: The player has a sword Prefab with a Collider rendered in front of him and whenever the player clicks mouse1 the attack is executed, in other words, both the sword Prefab and the collider rotates in a swipe movement and if the sword Collider collides with some entity during the attack duration, the "TakeDamage()" method of the entity is called, however, if it does not hit anything, nothing happens. While attacking, he can not reiniate the attack and goes back to the not attacking state.\
+**Carry** bodies of dead entities: If he is not already carrying a entity, whenever the player presses the Key "c", a ray is traced forward from the center of the screen, if the ray hits some Dead Entity within a range of "3f", this entity body Transform Positions becomes relative to the player. If the Key "c" is pressed again, the body position becomes absolute again, in other words, the player drops the dead entity on the floor again.
 -----
 
 The **Enemies** are entities that vary its states and animation states between:
->**Idle State**\
-**Walking State**\
-**Attacking State**\
-**Dead State**: Once the enemie's life get to 0 and it is taken as dead, its **Radgdoll** Component is instantly activated, which means the enemy instantly becomes a ragdoll and his rigid body physics abruptly changes and the enemies body falls on the floors
+>**Idle State**: It is the default state and it is always active when the entity is not moving.\
+**Patrolling State**: If the player is out of the enemy sight range, the enemy can not detect him and this state is active. While on this state, the enemy constantly picks random points within a limited range to walk to and the Walking Animation is rendered.\
+**Chasing Player State**: As the player and enemies moves, the player may get within the enemy sight range; and when it happens, the enemy chases the player, in other words, the enemy Chasing Player Animation is rendered and its transform position changes until it gets close to the player.\
+**Attacking Player State**: If the enemy is close enough to the player, he, similarly to the player, has a collider which moves according to the attack movement and if during the attack duration it hits the player, the player "TakeDamage()" method is called. This attack movement and animation is repeated while within the range.\
+**Dead State**: Once the enemie's life get to 0 and it is taken as dead, its **Radgdoll** Component is instantly activated, which means the enemy instantly becomes a ragdoll and his rigid body physics abruptly changes, which makes the enemies body falls on the floor.
 
 
 
@@ -83,6 +85,11 @@ The **Enemies** are entities that vary its states and animation states between:
 
 Among other auxiliar scripts...
 
+</br></br>
+## Characters and Animations
+
+The characters and animations mentioned above used on this project have been taken from [Mixamo](https://www.mixamo.com).
+<img width="401" alt="Main Menu Scene" src="https://user-images.githubusercontent.com/77935889/195225966-7314ca66-d248-4461-a4e5-8559734b3d4f.png">
 
 </br></br>
 ## Files walkthrough
@@ -91,15 +98,14 @@ Among other auxiliar scripts...
 **ProjectSettings/**: Contains information about various project settings like type of the project, input, graphics, quality, physics, audio settings etc.\
 **.gitattributes**: Contains specifications for files and paths attributes used by Git and Git LFS when performing git actions.\
 **.gitignore**: Contains specifications for files and paths that Git should ignore when performing git actions.\
-**README.md**: It is this file
+**README.md**: It is this file.
 
 
 
 </br></br>
 ## How to play (Linux only)
 #### Download from web:
-• Go to [Download Link](https://drive.google.com/drive/folders/1jNkPpK6-_DXVlI24532SCjOfAcSG7pg7) \
+• Go to [Download Link](https://drive.google.com/drive/folders/1jNkPpK6-_DXVlI24532SCjOfAcSG7pg7). \
 • Enjoy it.
-
 
 Course: [CS50’s Introduction to Game Development: Final Project](https://cs50.harvard.edu/games/2018)
